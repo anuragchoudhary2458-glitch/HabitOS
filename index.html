@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111315">
+<title>Habit OS</title>
+<style>
+:root{--bg:#101214;--panel:#191d20;--panel2:#202629;--mint:#8ce8bd;--mint2:#baf5d7;--text:#f2f6f3;--muted:#9ba7a1;--line:#2b3431;--red:#ff9b9b;--radius:20px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2420 0,#101214 48%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:0 0 calc(92px + env(safe-area-inset-bottom));}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.app{max-width:720px;margin:auto;padding:22px 16px 20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(145deg,#baf5d7,#60c99b);display:grid;place-items:center;color:#102018;font-size:21px;font-weight:900;box-shadow:0 6px 24px #8ce8bd20}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:2px;font-weight:800}.brand h1{font-size:21px;letter-spacing:1.5px;margin:2px 0 0}.date{font-size:12px;color:var(--muted);text-align:right;line-height:1.5}.page{display:none;animation:fade .18s ease}.page.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+.greeting{margin:4px 0 18px}.greeting h2{font-size:25px;margin:0 0 6px;letter-spacing:-.7px}.greeting p{color:var(--muted);font-size:13px;margin:0}.card{background:linear-gradient(145deg,#202624d9,#181c1edb);border:1px solid #ffffff0d;border-radius:var(--radius);padding:17px;margin-bottom:13px;box-shadow:0 10px 35px #00000010}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:23px 2px 12px}.section-head h3{font-size:15px;margin:0}.subtle{font-size:12px;color:var(--muted)}.hero{display:grid;grid-template-columns:1fr 132px;gap:10px;align-items:center}.hero h3{margin:0 0 8px;font-size:15px}.hero .big{font-size:31px;letter-spacing:-1px;font-weight:800}.hero p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.5}.ring{width:118px;height:118px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--mint) var(--progress,0%),#303a35 0);margin:auto}.ring:before{content:"";position:absolute;inset:9px;border-radius:50%;background:#1b201e}.ring-inner{z-index:1;text-align:center}.ring-inner strong{display:block;font-size:24px}.ring-inner span{font-size:10px;color:var(--muted)}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#ffffff05;border:1px solid #ffffff09;padding:13px 11px;border-radius:15px}.stat .icon{font-size:17px}.stat strong{display:block;font-size:20px;margin:8px 0 3px}.stat span{font-size:11px;color:var(--muted)}.habit-list{display:grid;gap:9px}.habit-row{display:flex;align-items:center;gap:12px;background:#ffffff04;border:1px solid #ffffff09;border-radius:16px;padding:12px}.habit-symbol{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;background:#8ce8bd12;border-radius:14px;font-size:20px}.habit-info{min-width:0;flex:1}.habit-info strong{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.habit-info span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.check{width:34px;height:34px;border-radius:12px;border:1px solid #45524b;background:#202724;color:transparent;display:grid;place-items:center;font-weight:900;font-size:17px;flex-shrink:0}.check.done{background:var(--mint);color:#102018;border-color:var(--mint)}.empty{padding:25px 12px;text-align:center;color:var(--muted);font-size:13px}.btn{border:0;border-radius:13px;background:var(--mint);color:#102018;font-weight:800;padding:12px 15px;font-size:13px}.btn.secondary{background:#ffffff08;color:var(--text);border:1px solid #ffffff12}.btn.danger{background:#ff9b9b16;color:var(--red);border:1px solid #ff9b9b30}.btn.small{padding:8px 11px;font-size:11px;border-radius:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:12px;color:var(--muted);font-weight:650}.field input,.field select{width:100%;background:#111513;border:1px solid #303b35;border-radius:12px;padding:12px;color:var(--text);min-height:44px}.field input::placeholder{color:#69766f}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.days{display:flex;gap:7px;flex-wrap:wrap}.day{width:36px;height:36px;border:1px solid #39443e;border-radius:11px;background:#111513;color:var(--muted);font-size:11px}.day.selected{background:var(--mint);border-color:var(--mint);color:#102018;font-weight:800}.progressbar{height:7px;border-radius:10px;background:#303a35;overflow:hidden}.progressbar span{display:block;height:100%;width:0;background:var(--mint);border-radius:10px;transition:width .2s}.chart-wrap{height:190px;position:relative;margin-top:10px}.chart-wrap canvas{width:100%;height:100%;display:block}.chart-legend{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:7px}.report-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.report-stats .stat strong{font-size:23px}.habit-report{margin-bottom:15px}.habit-report-top{display:flex;justify-content:space-between;gap:10px;margin-bottom:9px;font-size:12px}.habit-report-top span:last-child{color:var(--mint);font-weight:800}.bottom-nav{position:fixed;z-index:10;bottom:0;left:0;right:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#111315eF;backdrop-filter:blur(18px);border-top:1px solid #ffffff0b}.nav-inner{max-width:620px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.nav-btn{border:0;background:transparent;color:#84918a;border-radius:14px;padding:8px 3px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700}.nav-btn .nav-icon{font-size:19px}.nav-btn.active{color:var(--mint);background:#8ce8bd12}.toast{position:fixed;z-index:30;bottom:92px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#e3f9ec;color:#102018;border-radius:13px;padding:11px 15px;font-size:12px;font-weight:750;transition:.2s;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.history-day{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff0b}.history-day:last-child{border:0}.history-date{width:62px;flex-shrink:0}.history-date strong{display:block;font-size:12px}.history-date span{font-size:10px;color:var(--muted)}.history-detail{flex:1}.history-detail .progressbar{margin-top:7px}.history-pct{font-size:13px;font-weight:800;color:var(--mint)}.muted-note{color:var(--muted);font-size:11px;line-height:1.6}.divider{height:1px;background:#ffffff0b;margin:15px 0}.inline-input{display:flex;gap:8px}.inline-input input{flex:1;min-width:0}
+@media(min-width:600px){.app{padding:28px 24px}.greeting h2{font-size:29px}.hero{grid-template-columns:1fr 150px}.ring{width:132px;height:132px}.ring:before{inset:10px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">✓</div><div><div class="eyebrow">YOUR PERSONAL SYSTEM</div><h1>HABIT OS</h1></div></div>
+    <div class="date" id="todayLabel">Today<br>—</div>
+  </header>
+
+  <main>
+    <section class="page active" id="page-home">
+      <div class="greeting"><h2 id="greetingTitle">Small steps. Strong habits.</h2><p>Show up for yourself, one day at a time.</p></div>
+      <div class="card hero">
+        <div><div class="eyebrow">TODAY'S PROGRESS</div><div class="big" id="homePct">0%</div><h3 id="homeCount">0 of 0 habits complete</h3><p id="homeMessage">Start with one small win.</p></div>
+        <div class="ring" id="homeRing" style="--progress:0%"><div class="ring-inner"><strong id="ringPct">0%</strong><span>COMPLETE</span></div></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><div class="icon">🔥</div><strong id="streakValue">0</strong><span>Current streak</span></div>
+        <div class="stat"><div class="icon">✓</div><strong id="doneValue">0</strong><span>Done today</span></div>
+        <div class="stat"><div class="icon">◎</div><strong id="bestValue">0%</strong><span>Best day</span></div>
+      </div>
+      <div class="section-head"><h3>Today's habits</h3><button class="btn small secondary" data-go="habits">Manage</button></div>
+      <div id="homeHabitList" class="habit-list"></div>
+      <div class="section-head"><h3>Quick reflection</h3><span class="subtle">Saved for today</span></div>
+      <div class="card">
+        <div class="field" style="margin:0"><label for="reflection">What went well today?</label><input id="reflection" maxlength="280" placeholder="Write one small win…"></div>
+        <div class="actions" style="margin-top:10px"><button class="btn small" id="saveReflection">Save reflection</button></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-habits">
+      <div class="greeting"><h2>Your habits</h2><p>Choose a few habits you can repeat consistently.</p></div>
+      <div class="card">
+        <h3 id="habitFormTitle" style="margin:0 0 16px;font-size:15px">Create a habit</h3>
+        <form id="habitForm">
+          <div class="field"><label for="habitName">Habit name</label><input id="habitName" maxlength="60" required placeholder="e.g. Study for 45 minutes"></div>
+          <div class="form-grid">
+            <div class="field"><label for="habitCategory">Category</label><select id="habitCategory"><option>Study</option><option>Health</option><option>Mindset</option><option>Learning</option><option>Personal</option></select></div>
+            <div class="field"><label for="habitIcon">Icon</label><select id="habitIcon"><option value="📚">📚 Books</option><option value="🏃">🏃 Exercise</option><option value="🧠">🧠 Mind</option><option value="🌱">🌱 Growth</option><option value="💧">💧 Water</option><option value="🇯🇵">🇯🇵 Japanese</option><option value="🛏️">🛏️ Sleep</option><option value="✍️">✍️ Writing</option><option value="🎯">🎯 Focus</option><option value="✨">✨ Other</option></select></div>
+          </div>
+          <div class="field"><label>Schedule (select days)</label><div class="days" id="dayPicker"></div></div>
+          <div class="actions"><button class="btn" type="submit" id="habitSubmit">Add habit</button><button class="btn secondary" type="button" id="cancelEdit" hidden>Cancel</button></div>
+        </form>
+      </div>
+      <div class="section-head"><h3>All habits</h3><span class="subtle" id="habitTotal">0 habits</span></div>
+      <div id="allHabitList" class="habit-list"></div>
+      <p class="muted-note">Habits are saved on this device. Deleting a habit keeps its past check-in records in your history, but it will no longer appear in your active habit list.</p>
+    </section>
+
+    <section class="page" id="page-reports">
+      <div class="greeting"><h2>Your progress</h2><p>Look for consistency, not perfection.</p></div>
+      <div class="card">
+        <div class="section-head" style="margin:0 0 12px"><h3>Completion trend</h3><select id="chartRange" aria-label="Chart range" style="background:#111513;color:var(--text);border:1px solid #303b35;border-radius:10px;padding:8px;font-size:11px"><option value="7">7 days</option><option value="30">30 days</option></select></div>
+        <div class="chart-wrap"><canvas id="progressChart" aria-label="Habit completion line chart"></canvas></div>
+        <div class="chart-legend"><span id="chartStart">—</span><span>Daily completion %</span><span id="chartEnd">Today</span></div>
+      </div>
+      <div class="report-stats">
+        <div class="stat"><div class="icon">◷</div><strong id="weekAvg">0%</strong><span>7-day average</span></div>
+        <div class="stat"><div class="icon">✦</div><strong id="monthAvg">0%</strong><span>30-day average</span></div>
+        <div class="stat"><div class="icon">✓</div><strong id="totalChecks">0</strong><span>Habits completed</span></div>
+        <div class="stat"><div class="icon">↗</div><strong id="activeDays">0</strong><span>Days with progress</span></div>
+      </div>
+      <div class="section-head"><h3>Habit consistency</h3><span class="subtle">Last 30 days</span></div>
+      <div class="card" id="habitStats"></div>
+      <div class="section-head"><h3>Recent history</h3><span class="subtle">Most recent first</span></div>
+      <div class="card" id="historyList"></div>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="greeting"><h2>Settings</h2><p>Make Habit OS work for you.</p></div>
+      <div class="card">
+        <h3 style="font-size:15px;margin:0 0 15px">Your profile</h3>
+        <div class="field"><label for="profileName">What should we call you?</label><input id="profileName" maxlength="40" placeholder="Your name or nickname"></div>
+        <div class="field"><label for="dailyTarget">Daily completion goal</label><select id="dailyTarget"><option value="50">50% — just get started</option><option value="70">70% — steady progress</option><option value="80">80% — strong consistency</option><option value="100">100% — complete all planned habits</option></select></div>
+        <button class="btn" id="saveSettings">Save settings</button>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin:0 0 8px">Data & backup</h3>
+        <p class="muted-note">Your habits, check-ins, and reflections are stored in this browser on your device. They do not automatically sync to Google or another device. Export a backup regularly.</p>
+        <div class="actions"><button class="btn" id="exportBtn">Export backup</button><button class="btn secondary" id="importBtn">Import backup</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin:0 0 8px">About Habit OS</h3>
+        <p class="muted-note">Offline-first habit tracking. Uses your device's local date. This version does not require an account or internet connection after the file is saved on your phone.</p>
+        <div class="divider"></div>
+        <div class="actions"><button class="btn danger" id="clearBtn">Clear all app data</button></div>
+        <p class="muted-note">This permanently clears habits, check-ins, reflections, and settings from this browser. Export a backup first if you want to keep them.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom-nav" aria-label="Main navigation"><div class="nav-inner">
+  <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span><span>Home</span></button>
+  <button class="nav-btn" data-page="habits"><span class="nav-icon">☷</span><span>Habits</span></button>
+  <button class="nav-btn" data-page="reports"><span class="nav-icon">▥</span><span>Reports</span></button>
+  <button class="nav-btn" data-page="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+</div></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+'use strict';
+const STORAGE_KEY='habit-os-data-v1';
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const $=id=>document.getElementById(id);
+const dateKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseDate=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)};
+const shiftDate=(k,n)=>{const d=parseDate(k);d.setDate(d.getDate()+n);return dateKey(d)};
+const niceDate=(k,opts={weekday:'short',month:'short',day:'numeric'})=>parseDate(k).toLocaleDateString(undefined,opts);
+const defaultState=()=>({version:1,profile:{name:'',target:80},habits:[],checks:{},reflections:{},createdAt:dateKey()});
+let state=loadState(), editingId=null, selectedDays=new Set([0,1,2,3,4,5,6]), toastTimer;
+function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return defaultState();const x=JSON.parse(raw);if(!x||!Array.isArray(x.habits)||!x.checks)return defaultState();return {...defaultState(),...x,profile:{...defaultState().profile,...x.profile}}}catch(e){return defaultState()}}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));return true}catch(e){notify('Could not save data. Export a backup or free device storage.');return false}}
+function uid(){return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function notify(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300)}
+function today(){return dateKey()}
+function activeToday(){const day=parseDate(today()).getDay();return state.habits.filter(h=>h.days.includes(day))}
+function checkKey(day,id){return `${day}|${id}`}
+function isDone(day,id){return !!state.checks[checkKey(day,id)]}
+function setDone(day,id,done){if(done)state.checks[checkKey(day,id)]={done:true,at:new Date().toISOString()};else delete state.checks[checkKey(day,id)];save();render()}
+function pctFor(day){const list=state.habits.filter(h=>h.days.includes(parseDate(day).getDay()));if(!list.length)return null;return Math.round(list.filter(h=>isDone(day,h.id)).length/list.length*100)}
+function doneFor(day){return state.habits.filter(h=>h.days.includes(parseDate(day).getDay())&&isDone(day,h.id)).length}
+function streak(){let d=today(),n=0;let p=pctFor(d);if(p===null||p===0)d=shiftDate(d,-1);for(let i=0;i<366;i++){const v=pctFor(d);if(v===null||v===0)break;n++;d=shiftDate(d,-1)}return n}
+function bestDay(){let best=0;for(let i=0;i<365;i++){const p=pctFor(shiftDate(today(),-i));if(p!==null)best=Math.max(best,p)}return best}
+function habitPct(h,days=30){let planned=0,done=0;for(let i=0;i<days;i++){const d=shiftDate(today(),-i);if(h.days.includes(parseDate(d).getDay())){planned++;if(isDone(d,h.id))done++}}return planned?Math.round(done/planned*100):0}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderHabitRow(h,day,editable=false){const planned=h.days.includes(parseDate(day).getDay()),done=isDone(day,h.id);return `<div class="habit-row"><div class="habit-symbol">${escapeHtml(h.icon||'✨')}</div><div class="habit-info"><strong>${escapeHtml(h.name)}</strong><span>${escapeHtml(h.category||'Personal')}${planned?' · Planned today':' · Not scheduled today'}</span></div>${editable?`<button class="btn small secondary edit-habit" data-id="${h.id}">Edit</button><button class="btn small danger delete-habit" data-id="${h.id}" aria-label="Delete ${escapeHtml(h.name)}">×</button>`:planned?`<button class="check ${done?'done':''}" data-check="${h.id}" aria-label="${done?'Mark incomplete':'Mark complete'}">${done?'✓':''}</button>`:`<span class="subtle">—</span>`}</div>`}
+function renderHome(){const t=today(),list=activeToday(),done=list.filter(h=>isDone(t,h.id)).length,p=list.length?Math.round(done/list.length*100):0;
+$('todayLabel').innerHTML=`${niceDate(t,{weekday:'short'})}<br>${niceDate(t,{month:'short',day:'numeric',year:'numeric'})}`;
+const hr=new Date().getHours();$('greetingTitle').textContent=(hr<12?'Good morning':hr<18?'Good afternoon':'Good evening')+(state.profile.name?', '+state.profile.name:'')+'.';
+$('homePct').textContent=p+'%';$('homeCount').textContent=`${done} of ${list.length} habits complete`;$('ringPct').textContent=p+'%';$('homeRing').style.setProperty('--progress',p+'%');
+$('homeMessage').textContent=!list.length?'Add habits or adjust their schedules to get started.':p===100?'Excellent work — all planned habits are complete.':p>=Number(state.profile.target||80)?'You reached your daily target. Keep it steady.':done?'Nice start. One more small win counts.':'Start with the easiest habit.';
+$('streakValue').textContent=streak();$('doneValue').textContent=done;$('bestValue').textContent=bestDay()+'%';
+$('homeHabitList').innerHTML=list.length?list.map(h=>renderHabitRow(h,t)).join(''):'<div class="card empty">No habits scheduled for today yet.<br><br><button class="btn" data-go="habits">Create your first habit</button></div>';
+$('reflection').value=state.reflections[t]||'';
+}
+function renderDays(){const box=$('dayPicker');box.innerHTML=DAYS.map((d,i)=>`<button type="button" class="day ${selectedDays.has(i)?'selected':''}" data-day="${i}" aria-pressed="${selectedDays.has(i)}">${d}</button>`).join('')}
+function resetHabitForm(){editingId=null;$('habitForm').reset();selectedDays=new Set([0,1,2,3,4,5,6]);$('habitFormTitle').textContent='Create a habit';$('habitSubmit').textContent='Add habit';$('cancelEdit').hidden=true;renderDays()}
+function renderHabits(){const all=$('allHabitList');$('habitTotal').textContent=`${state.habits.length} habit${state.habits.length===1?'':'s'}`;all.innerHTML=state.habits.length?state.habits.map(h=>renderHabitRow(h,today(),true)).join(''):'<div class="card empty">No habits yet. Use the form above to create your first habit.</div>'}
+function avgRange(days){let vals=[];for(let i=0;i<days;i++){const p=pctFor(shiftDate(today(),-i));if(p!==null)vals.push(p)}return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0}
+function renderReports(){const range=Number($('chartRange').value)||7;drawChart(range);$('weekAvg').textContent=avgRange(7)+'%';$('monthAvg').textContent=avgRange(30)+'%';
+let checks=0,active=0;for(let i=0;i<30;i++){const d=shiftDate(today(),-i);checks+=doneFor(d);if(doneFor(d)>0)active++}
+$('totalChecks').textContent=checks;$('activeDays').textContent=active;
+$('habitStats').innerHTML=state.habits.length?state.habits.map(h=>`<div class="habit-report"><div class="habit-report-top"><span>${escapeHtml(h.icon||'✨')} ${escapeHtml(h.name)}</span><span>${habitPct(h)}%</span></div><div class="progressbar"><span style="width:${habitPct(h)}%"></span></div></div>`).join(''):'<div class="empty">Add habits to see consistency statistics.</div>';
+const rows=[];for(let i=0;i<14;i++){const d=shiftDate(today(),-i),p=pctFor(d);if(p!==null)rows.push({d,p,done:doneFor(d),total:state.habits.filter(h=>h.days.includes(parseDate(d).getDay())).length})}
+$('historyList').innerHTML=rows.length?rows.map(x=>`<div class="history-day"><div class="history-date"><strong>${escapeHtml(niceDate(x.d,{weekday:'short'}))}</strong><span>${escapeHtml(niceDate(x.d,{month:'short',day:'numeric'}))}</span></div><div class="history-detail"><div class="subtle">${x.done} of ${x.total} completed</div><div class="progressbar"><span style="width:${x.p}%"></span></div></div><div class="history-pct">${x.p}%</div></div>`).join(''):'<div class="empty">Your daily history will appear here.</div>';
+}
+function drawChart(range){const canvas=$('progressChart'),rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=Math.max(1,rect.width*dpr);canvas.height=Math.max(1,rect.height*dpr);const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);
+const pad={l:28,r:9,t:12,b:23},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;ctx.font='10px system-ui';ctx.textBaseline='middle';
+[0,25,50,75,100].forEach(v=>{const y=pad.t+ch-(v/100)*ch;ctx.strokeStyle='#303a35';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#829087';ctx.textAlign='right';ctx.fillText(v+'',pad.l-7,y)});
+const vals=[];for(let i=range-1;i>=0;i--){const d=shiftDate(today(),-i);vals.push({d,p:pctFor(d)})}
+const xAt=i=>pad.l+(range===1?cw/2:i*cw/(range-1)),yAt=p=>pad.t+ch-(p/100)*ch;
+ctx.strokeStyle='#8ce8bd';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let started=false;
+vals.forEach((v,i)=>{if(v.p===null){started=false;return}const x=xAt(i),y=yAt(v.p);if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y)});ctx.stroke();
+vals.forEach((v,i)=>{if(v.p===null)return;const x=xAt(i),y=yAt(v.p);ctx.fillStyle='#8ce8bd';ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()});
+ctx.fillStyle='#829087';ctx.textAlign='left';ctx.fillText(range===7?'7 days ago':'30 days ago',pad.l,h-8);ctx.textAlign='right';ctx.fillText('Today',w-pad.r,h-8);
+$('chartStart').textContent=niceDate(vals[0].d,{month:'short',day:'numeric'});$('chartEnd').textContent=niceDate(vals[vals.length-1].d,{month:'short',day:'numeric'});
+}
+function renderSettings(){$('profileName').value=state.profile.name||'';$('dailyTarget').value=String(state.profile.target||80)}
+function render(){renderHome();renderHabits();renderReports();renderSettings()}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='reports')setTimeout(()=>drawChart(Number($('chartRange').value)||7),20);window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+document.addEventListener('click',e=>{const go=e.target.closest('[data-go]');if(go){showPage(go.dataset.go);return}const check=e.target.closest('[data-check]');if(check){setDone(today(),check.dataset.check,!isDone(today(),check.dataset.check));return}const day=e.target.closest('[data-day]');if(day){const n=Number(day.dataset.day);selectedDays.has(n)?selectedDays.delete(n):selectedDays.add(n);renderDays();return}const edit=e.target.closest('.edit-habit');if(edit){const h=state.habits.find(x=>x.id===edit.dataset.id);if(!h)return;editingId=h.id;$('habitName').value=h.name;$('habitCategory').value=h.category||'Personal';$('habitIcon').value=h.icon||'✨';selectedDays=new Set(h.days);$('habitFormTitle').textContent='Edit habit';$('habitSubmit').textContent='Save changes';$('cancelEdit').hidden=false;renderDays();$('habitForm').scrollIntoView({behavior:'smooth',block:'start'});return}const del=e.target.closest('.delete-habit');if(del){const h=state.habits.find(x=>x.id===del.dataset.id);if(h&&confirm(`Delete "${h.name}" from your active habits? Past check-ins will remain in stored history.`)){state.habits=state.habits.filter(x=>x.id!==h.id);save();render();notify('Habit deleted.')}return}});
+$('habitForm').addEventListener('submit',e=>{e.preventDefault();const name=$('habitName').value.trim();if(!name)return;if(!selectedDays.size){notify('Select at least one day.');return}const data={name,category:$('habitCategory').value,icon:$('habitIcon').value,days:[...selectedDays].sort((a,b)=>a-b)};if(editingId){const h=state.habits.find(x=>x.id===editingId);if(h)Object.assign(h,data);notify('Habit updated.')}else{state.habits.push({id:uid(),...data,createdAt:today()});notify('Habit added.')}save();resetHabitForm();render();showPage('habits')});
+$('cancelEdit').addEventListener('click',resetHabitForm);
+$('saveReflection').addEventListener('click',()=>{const v=$('reflection').value.trim();if(v)state.reflections[today()]=v;else delete state.reflections[today()];save();notify('Reflection saved.')});
+$('saveSettings').addEventListener('click',()=>{state.profile.name=$('profileName').value.trim();state.profile.target=Number($('dailyTarget').value)||80;save();render();notify('Settings saved.')});
+$('chartRange').addEventListener('change',()=>drawChart(Number($('chartRange').value)||7));
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`habit-os-backup-${today()}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Backup export started.')});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!data||!Array.isArray(data.habits)||!data.checks||typeof data.checks!=='object')throw Error('Invalid backup');if(!confirm('Import this backup and replace current Habit OS data? Export your current data first if you want to keep it.'))return;state={...defaultState(),...data,profile:{...defaultState().profile,...data.profile}};save();render();notify('Backup imported.')}catch(err){notify('Could not import this file. Choose a valid Habit OS backup.')}finally{e.target.value=''}});
+$('clearBtn').addEventListener('click',()=>{if(confirm('Permanently clear all Habit OS data from this browser? This cannot be undone unless you exported a backup.')){state=defaultState();save();resetHabitForm();render();notify('App data cleared.')}});
+window.addEventListener('resize',()=>{if($('page-reports').classList.contains('active'))drawChart(Number($('chartRange').value)||7)});
+window.addEventListener('focus',()=>{const d=state.createdAt;if(d!==today())render()});
+render();renderDays();
+})();
+</script>
+</body>
+</html>
